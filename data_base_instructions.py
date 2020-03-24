@@ -12,6 +12,18 @@ def set_cursor():
 	return cursor
 
 
+def apply_change(sql):
+	"""
+
+	:param sql: sql is a command on SQLite language
+	:return: none returned function
+	"""
+	cursor = set_cursor()
+	cursor.execute(sql)
+	cursor.execute('COMMIT')
+	cursor.close()
+
+
 def get_database_list():
 	"""
 
@@ -38,7 +50,7 @@ def get_number():
 class ContactsBase:
 
 	def __init__(self):
-		self.answer = None
+		self.status = ''
 
 	def search_contact_by_request(self, request):
 		answer = []
@@ -53,22 +65,13 @@ class ContactsBase:
 		sql = f'''INSERT INTO {CT.TABLE_NAME} 
 ({CT.NUMBER}, {CT.NAME}, {CT.ORGANIZATION}, {CT.DIVISION}, {CT.JOB_TITLE}, {CT.PHONE}, {CT.DESCRIPTION}) values 
 ("{number}", "{name}", "{organization}", "{division}", "{job_title}", "{phone}", "{description}")'''
-		cursor = set_cursor()
-		cursor.execute(sql)
-		cursor.execute('COMMIT')
-		cursor.close()
+		apply_change(sql)
+		self.status = 'done'
+		return self.status
 
+	def remove_contact_with_number(self, number):
+		sql = f'DELETE FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {str(number)}'
+		apply_change(sql)
+		self.status = 'done'
+		return self.status
 
-# def remove_contact(self, name, phone, description):
-#	sql =
-
-
-a = ContactsBase()
-# a.create_new_contact('Арсений', '89777666891', 'еще один тестовый контакт')
-# print(a.find_contact_by_request('ШЧ22'))
-
-# a.create_new_contact('Олег', '89777555891', 'еще один тестовый контакт')
-
-
-#a.create_new_contact_with_data(get_number(), 'Аркадий райкин', 'цирк', '-', 'клоун', '234234', 'простой тест')
-print(a.search_contact_by_request('клоун'))
