@@ -52,14 +52,15 @@ class ContactsBase:
 	def __init__(self):
 		self.status = ''
 
-	def search_contact_by_request(self, request):
+	@staticmethod
+	def search_contact_by_request(request):
 		answer = []
 		for row in get_database_list():
 			if set(request.split()).issubset(set(' '.join(row[1:]).split())):
 				answer.append(row[1:])
 		cursor = set_cursor()
 		cursor.close()
-		return answer if len(answer) > 0 else f'По запросу {request} не удалось ничего найти'
+		return answer if len(answer) > 0 else [[f'По запросу "{request}" не удалось ничего найти']]
 
 	def create_new_contact_with_data(self, number, name, organization, division, job_title, phone, description):
 		sql = f'''INSERT INTO {CT.TABLE_NAME} 
