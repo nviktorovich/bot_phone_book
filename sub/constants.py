@@ -1,6 +1,5 @@
-
 class Constants:
-
+	TELERGAM_API = '1090271153:AAGZF0toeX9uJ56yv_y1sI94Ghkb2Ku_YNE' # t.me/tester3Bot.
 	EMPTY_RESULT_OF_SEARCH = 'No result'
 	TABLE_NAME = 'contacts'
 	DB_PATH = 'sub/database.db'
@@ -12,3 +11,21 @@ class Constants:
 	JOB_TITLE = 'job_title'
 	PHONE = 'tel'
 	DESCRIPTION = 'info'
+
+	START_MESSAGE = 'Phone book 📙\n🚂🚃🚃🚃🚃'
+	SEARCH_MESSAGE = '''Чтобы найти нужный контакт\nотправьте сообщение с данными, 
+например:\n- 👤 имя;\n- 👨‍🚀 должность;\n- 🏛 организация, и т.д.'''
+	ADD_CONTACT_MESSAGE = '''Введите в одном сообщении с новой строки:
+-Название(Имя, Станция...);\n-Организация(ШЧ, ПЧ, Станция);\n-Отдел(СЦБ, КИП ...);\n-Должность(ШНС, ПЧГ, Секретарь...);
+-Телефон(сот:..., рорс:...);\n-Инфо(Дополнительная информация);'''
+	ADD_CONTACT_ERROR_MESSAGE = '❗️Необходимо заполнить все шесть полей, каждое поле с новой строки, если поле должно ' \
+	                            'быть пустым, ставьте "-" '
+
+	ERASE_CONTACT_MESSAGE = 'Контакт стерт 🗑'
+
+	SEARCH_ICON = '🔍'
+	ADD_CONTACT_ICON = '📝'
+	CLOSE_ICON = '✖️'
+	BACK_ICON = '🔙️'
+	REMOVE_ICON = '🗑'
+	SAVE_CONTACT_ICON = '➕'
