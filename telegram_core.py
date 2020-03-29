@@ -7,6 +7,15 @@ from sub.option_permission import Jumper
 bot = telebot.TeleBot(CT.TELERGAM_API)
 
 
+def jumpers_disabler(func):
+	def wrap(*args, **kwargs):
+		func(*args, **kwargs)
+		Jumper.set_search_permission(False)
+		Jumper.set_add_contact_permission(False)
+
+	return wrap
+
+
 class Keyboards:
 
 	@staticmethod
@@ -35,10 +44,10 @@ class Keyboards:
 		return keyboard
 
 	@staticmethod
-	def add_close():
+	def save_close():
 		keyboard = telebot.types.InlineKeyboardMarkup()
 		keyboard.row(
-			telebot.types.InlineKeyboardButton(text=CT.ADD_NEW_CONTACT_ICON, callback_data='add_new_contact'),
+			telebot.types.InlineKeyboardButton(text=CT.ADD_NEW_CONTACT_ICON, callback_data='save_new_contact'),
 			telebot.types.InlineKeyboardButton(text=CT.CLOSE_ICON, callback_data='close'))
 		return keyboard
 
@@ -52,30 +61,24 @@ class Keyboards:
 		return keyboard
 
 
-
-
-
 @bot.message_handler(commands=['start'])
+@jumpers_disabler
 def send_welcome(query):
 	bot.send_message(query.chat.id, text=user_instructions.start_message(), reply_markup=Keyboards.search_add_close())
-	Jumper.set_search_permission(False)
-	Jumper.set_add_contact_permission(False)
 
 
 @bot.callback_query_handler(func=lambda c: c.data == 'back')
+@jumpers_disabler
 def callback_return_welcome(query):
 	bot.edit_message_text(text=user_instructions.start_message(), chat_id=query.message.chat.id,
 	                      message_id=query.message.message_id,
 	                      reply_markup=Keyboards.search_add_close())
-	Jumper.set_search_permission(False)
-	Jumper.set_add_contact_permission(False)
 
 
 @bot.callback_query_handler(func=lambda query: query.data == 'close')
+@jumpers_disabler
 def callback_worker_exit(query):
 	bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
-	Jumper.set_search_permission(False)
-	Jumper.set_add_contact_permission(False)
 
 
 @bot.callback_query_handler(func=lambda query: query.data == 'search')
@@ -86,11 +89,9 @@ def callback_search_menu(query):
 	Jumper.set_add_contact_permission(False)
 
 
-@bot.message_handler(func=lambda query: Jumper.status)
+@bot.message_handler(func=lambda query: Jumper.search_contact_status)
+@jumpers_disabler
 def callback_search_result(query):
-	Jumper.set_search_permission(False)
-	Jumper.set_add_contact_permission(False)
-
 	try:
 		for row in data_base_instructions.ContactsBase.search_contact_by_request(query.text):
 			bot.send_message(chat_id=query.chat.id, text=' '.join(row), reply_markup=Keyboards.save_remove())
@@ -106,22 +107,28 @@ def add_new_contact_menu_callback_worker(query):
 	Jumper.set_add_contact_permission(True)
 
 
-@bot.message_handler(func=lambda query: Jumper.add_contact)
+@bot.message_handler(func=lambda query: Jumper.add_contact_status)
+@jumpers_disabler
 def callback_user_input_contact_message(query):
 	try:
 		name, organization, division, job_title, phone, description = query.text.split('\n')
-		result = user_instructions.check_new_contact_message(name, organization, division, job_title, phone, description)
-		print(result)
-		bot.send_message(text=result[0], chat_id=query.chat.id, reply_markup=Keyboards.add_close())
+		result = user_instructions.check_new_contact_message(name, organization, division, job_title, phone,
+		                                                     description)
+		Jumper.add_new_contact_data(result[1])
+		bot.send_message(text=result[0], chat_id=query.chat.id, reply_markup=Keyboards.save_close())
 	except ValueError:
-		bot.send_message(text=CT.ADD_CONTACT_ERROR_MESSAGE, chat_id=query.chat.id, reply_markup=Keyboards.back_add_close())
-
-	Jumper.set_search_permission(False)
-	Jumper.set_add_contact_permission(False)
+		bot.send_message(text=CT.ADD_CONTACT_ERROR_MESSAGE, chat_id=query.chat.id,
+		                 reply_markup=Keyboards.back_add_close())
 
 
-#@bot.callback_query_handler(func=lambda query: query.data == 'add_new_contact')
-#def callback_save_contact_to_database(query: telebot.types.CallbackQuery):
+@bot.callback_query_handler(func=lambda query: query.data == 'save_new_contact')
+@jumpers_disabler
+def callback_save_contact_to_database(query: telebot.types.CallbackQuery):
+	bot.delete_message(chat_id=query.message.chat.id, message_id=query.message.message_id)
+	data_base_instructions.ContactsBase.create_new_contact_with_data(*Jumper.new_contact_data)
+	bot.answer_callback_query(callback_query_id=query.id, text=CT.ADD_NEW_CONTACT_TO_ADDRESS_BOOK_SUCCESS_TEXT,
+	                          cache_time=10)
+	Jumper.add_new_contact_data(False)
 
 
 
