@@ -29,7 +29,7 @@ class Constants:
 	                            'быть пустым, ставьте "-" '
 
 	ERASE_CONTACT_MESSAGE = 'Контакт стерт 🗑'
-
+	ADD_NEW_CONTACT_TO_ADDRESS_BOOK_SUCCESS_TEXT = '✅Контакт успешно добавлен в адресную книгу'
 	SEARCH_ICON = '🔍'
 	ADD_CONTACT_ICON = '📝'
 	CLOSE_ICON = '✖️'
