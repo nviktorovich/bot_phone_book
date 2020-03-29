@@ -62,13 +62,14 @@ class ContactsBase:
 		cursor.close()
 		return answer if len(answer) > 0 else [[f'По запросу "{request}" не удалось ничего найти']]
 
-	def create_new_contact_with_data(self, number, name, organization, division, job_title, phone, description):
+	@staticmethod
+	def create_new_contact_with_data(number, name, organization, division, job_title, phone, description):
 		sql = f'''INSERT INTO {CT.TABLE_NAME} 
 ({CT.NUMBER}, {CT.NAME}, {CT.ORGANIZATION}, {CT.DIVISION}, {CT.JOB_TITLE}, {CT.PHONE}, {CT.DESCRIPTION}) values 
 ("{number}", "{name}", "{organization}", "{division}", "{job_title}", "{phone}", "{description}")'''
 		apply_change(sql)
-		self.status = 'done'
-		return self.status
+		status = 'контакт добавлен в адресную книгу'
+		return status
 
 	def remove_contact_with_number(self, number):
 		sql = f'DELETE FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {str(number)}'
