@@ -30,6 +30,7 @@ class Constants:
 
 	ERASE_CONTACT_MESSAGE = 'Контакт стерт 🗑'
 	ADD_NEW_CONTACT_TO_ADDRESS_BOOK_SUCCESS_TEXT = '✅Контакт успешно добавлен в адресную книгу'
+	NOT_FOUND_CONTACT_MESSAGE = '⚠️ Не удалось найти контакт по запросу: '
 	SEARCH_ICON = '🔍'
 	ADD_CONTACT_ICON = '📝'
 	CLOSE_ICON = '✖️'
@@ -38,3 +39,4 @@ class Constants:
 	REMOVE_ICON = '🗑'
 	SAVE_CONTACT_ICON = '💾'
 	ADD_NEW_CONTACT_ICON = '➕'
+	APPROVE_REMOVING_ICON = '❌'
