@@ -56,11 +56,14 @@ class ContactsBase:
 	def search_contact_by_request(request):
 		answer = []
 		for row in get_database_list():
-			if set(request.split()).issubset(set(' '.join(row[1:]).split())):
-				answer.append(row[1:])
+			if set(request.lower().split()).issubset(set(' '.join(row).lower().split())):
+				answer.append(row)
 		cursor = set_cursor()
 		cursor.close()
-		return answer if len(answer) > 0 else [[f'По запросу "{request}" не удалось ничего найти']]
+		if len(answer) == 0:
+			return [False, request]
+		else:
+			return answer
 
 	@staticmethod
 	def create_new_contact_with_data(number, name, organization, division, job_title, phone, description):
@@ -71,9 +74,9 @@ class ContactsBase:
 		status = 'контакт добавлен в адресную книгу'
 		return status
 
-	def remove_contact_with_number(self, number):
-		sql = f'DELETE FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {str(number)}'
+	@staticmethod
+	def remove_contact_with_number(number):
+		sql = f'DELETE FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {number}'
 		apply_change(sql)
-		self.status = 'done'
-		return self.status
+
 
