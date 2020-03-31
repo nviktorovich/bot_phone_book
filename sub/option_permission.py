@@ -1,3 +1,4 @@
+
 class Jumper:
 	search_contact_status = False
 	add_contact_status = False
