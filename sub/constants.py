@@ -12,7 +12,7 @@ class Constants:
 	PHONE = 'tel'
 	DESCRIPTION = 'info'
 
-	START_MESSAGE = 'Phone book 📙\n🚂🚃🚃🚃🚃'
+	START_MESSAGE = 'Телефонная книга 📙\n👷‍♂️👮‍♀️👨‍🎓👩‍🏫👩‍🚒'
 	SEARCH_MESSAGE = '''Чтобы найти нужный контакт\nотправьте сообщение с данными, 
 например:\n- 👤 имя;\n- 👨‍🚀 должность;\n- 🏛 организация, и т.д.'''
 	ADD_CONTACT_MESSAGE = 'Введите в одном сообщении с новой строки:' \
@@ -20,8 +20,8 @@ class Constants:
 	                      '\n- [Организация/подразделение];' \
 	                      '\n- [Отдел/цех];' \
 	                      '\n- [Должность];' \
-	                      '\n- [Тел: сот/рорс];' \
-	                      '\n- [Доп информация].'
+	                      '\n- [Тел: основной];' \
+	                      '\n- [Инфо в т.ч доп телефон].'
 
 
 
@@ -51,3 +51,21 @@ class Constants:
 	SAVE_CONTACT_ICON = '💾'
 	ADD_NEW_CONTACT_ICON = '➕'
 	APPROVE_REMOVING_ICON = '❌'
+
+	INLINE_ANSWER_EMPTY = {'id': '1',
+	                       'title': 'Поиск не дал результатов',
+	                       'description': 'Попробуйте поменять запрос',
+	                       'thumb_url': "https://img.icons8.com/color/48/000000/nothing-found.png",
+	                       'thumb_width': 48, 'thumb_height': 48}
+
+	INLINE_ANSWER_MANY = {'id': '1',
+	                      'title': 'Много совпадений',
+	                      'description': 'Уточните запрос, чтобы уменьшить количество совпадений',
+	                      'thumb_url': "https://img.icons8.com/color/48/000000/crowd.png",
+	                      'thumb_width': 48, 'thumb_height': 48}
+
+	INLINE_ANSWER_PRETTY = {'id': '',
+	                        'title': '',
+	                        'description': '',
+	                        'thumb_url': "https://img.icons8.com/color/48/000000/contact-card.png",
+	                        'thumb_width': 48, 'thumb_height': 48}
