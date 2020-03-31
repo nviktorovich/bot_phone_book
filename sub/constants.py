@@ -1,5 +1,5 @@
 class Constants:
-	TELERGAM_API = '1090271153:AAGZF0toeX9uJ56yv_y1sI94Ghkb2Ku_YNE' # t.me/tester3Bot.
+	TELERGAM_API = '1090271153:AAGZF0toeX9uJ56yv_y1sI94***********' # t.me/tester3Bot.
 	EMPTY_RESULT_OF_SEARCH = 'No result'
 	TABLE_NAME = 'contacts'
 	DB_PATH = 'sub/database.db'
