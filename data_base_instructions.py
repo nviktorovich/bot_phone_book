@@ -47,6 +47,17 @@ def get_number():
 	return str(max([int(x[0]) for x in num_list]) + 1)
 
 
+def get_contact_with_selected_number(sql):
+	"""
+
+	:param sql:
+	:return: row with all data-columns
+	"""
+	cursor = set_cursor()
+	cursor.execute(sql)
+	return cursor.fetchone()
+
+
 class ContactsBase:
 
 	def __init__(self):
@@ -79,4 +90,9 @@ class ContactsBase:
 		sql = f'DELETE FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {number}'
 		apply_change(sql)
 
+	@staticmethod
+	def download_contact_to_phone(number):
+		sql = f'SELECT * FROM {CT.TABLE_NAME} WHERE {CT.NUMBER} = {number}'
+		row = get_contact_with_selected_number(sql)
+		return row[1], row[5]
 
