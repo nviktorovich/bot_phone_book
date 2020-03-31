@@ -28,6 +28,17 @@ class Constants:
 	ADD_CONTACT_ERROR_MESSAGE = '❗️Необходимо заполнить все шесть полей, каждое поле с новой строки, если поле должно ' \
 	                            'быть пустым, ставьте "-" '
 
+	BUTTON_SEARCH = 'search_contact'
+	BUTTON_ADD = 'add_new_contact'
+	BUTTON_CLOSE = 'close_bot_menu'
+	BUTTON_BACK = 'back_to_main_menu'
+	BUTTON_DOWNLOAD = 'download_contact_to_phone'
+	BUTTON_REMOVE = 'remove_menu'
+	BUTTON_APPROVE_REMOVING = 'approve_removing'
+	BUTTON_SAVE_NEW_CONTACT = 'save_new_contact'
+
+
+
 	ERASE_CONTACT_MESSAGE = 'Контакт стерт 🗑'
 	ADD_NEW_CONTACT_TO_ADDRESS_BOOK_SUCCESS_TEXT = '✅Контакт успешно добавлен в адресную книгу'
 	NOT_FOUND_CONTACT_MESSAGE = '⚠️ Не удалось найти контакт по запросу: '
